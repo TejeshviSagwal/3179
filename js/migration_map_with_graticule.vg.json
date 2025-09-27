@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Net Overseas Migration per 1000 People by Australian State",
+  "width": 800,
+  "height": 600,
+  "projection": {"type": "mercator"},
+  "layer": [
+    {
+      "data": { 
+        "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/Australia_state_map_With_30_graticule.json",
+        "format": {"type": "topojson", "feature": "georef-australia-state-millesime"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.ste_name",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/migration.csv"
+            },
+            "key": "State",
+            "fields": ["MigrationPer1000"]
+          }
+        },
+        {"filter": "datum.MigrationPer1000 != null"}
+      ],
+      "mark": {"type": "geoshape", "stroke": "black"},
+      "encoding": {
+        "color": {
+          "field": "MigrationPer1000",
+          "type": "quantitative",
+          "title": "Net Migration per 1000 people",
+          "scale": {"scheme": "blues"}
+        },
+        "tooltip": [
+          {"field": "properties.ste_name", "type": "nominal", "title": "State"},
+          {"field": "MigrationPer1000", "type": "quantitative", "title": "Net Migration per 1000 people", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/Australia_state_map_With_30_graticule.json",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+    }
+  ]
+}
