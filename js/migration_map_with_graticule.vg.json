@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Net Overseas Migration per 1000 People by Australian State",
+  "title": "Net Overseas Migration per 1000 People by Australian State in 2025",
   "width": 800,
   "height": 600,
   "projection": {"type": "mercator"},
@@ -46,3 +46,4 @@
     }
   ]
 }
+
