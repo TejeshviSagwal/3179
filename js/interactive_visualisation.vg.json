@@ -1,0 +1,62 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 400,
+  "title": "Net Overseas Migration into Australian States (1981–2025)",
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/migration_yearly_state_average_clean.csv"
+  },
+
+  "transform": [
+    {"filter": "datum.Net_Overseas_Migration != null"}
+  ],
+
+  "layer": [
+    {
+      "selection": {
+        "state_highlight": {
+          "type": "multi",
+          "fields": ["State"],
+          "bind": "legend"
+        }
+      },
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {"labelAngle": -45}
+        },
+        "y": {"field": "Net_Overseas_Migration", "type": "quantitative", "title": "Net Overseas Migration (Persons)"},
+        "color": {"field": "State", "type": "nominal", "title": "State"},
+        "opacity": {
+          "condition": {"selection": "state_highlight", "value": 1},
+          "value": 0.2
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal"},
+          {"field": "Year", "type": "ordinal", "title": "Year"},
+          {"field": "Net_Overseas_Migration", "type": "quantitative", "title": "Net Migration", "format": ","}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "rule", "color": "red", "strokeDash": [4,4]},
+      "encoding": {
+        "x": {"value": 650},  
+        "y": {"value": 50},   
+        "y2": {"value": 500} 
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 5, "dy": -10, "color": "red", "fontWeight": "bold"},
+      "encoding": {
+        "x": {"value": 660},  
+        "y": {"value": 500},
+        "text": {"value": "Border reopening after COVID-19"}
+      }
+    }
+  ]
+}
