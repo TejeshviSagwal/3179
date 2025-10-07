@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <meta charset="utf-8">
+  <title>Migration Visualisations</title>
+
+  <!-- Vega & Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
-  
-  
+
   <!-- CSS file -->
   <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
-  
 </head>
-<body>
-  
-<div id="symbol_map"></div>
 
-<script type="text/javascript">
+<body style="font-family: sans-serif; margin: 40px;">
+  <h2>Map of Overseas Migration by Region</h2>
+  <div id="map_vis"></div>
 
-  var spec2 = "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/js/migration_map_with_graticule.vg.json";
-  vegaEmbed('#symbol_map', spec2).then(function(result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-  }).catch(console.error);
-</script>
+  <h2>Interactive Visualisation of Migration Trends</h2>
+  <div id="line_vis"></div>
 
+  <script type="text/javascript">
+    // Week 9 Map
+    var mapSpec = "js/migration_map_with_graticule.vg.json";
+    vegaEmbed('#map_vis', mapSpec).then(function(result) {
+      // Map loaded successfully
+    }).catch(console.error);
+
+    // Second Visualisation (interactive)
+    var lineSpec = "js/interactive_visualisation.vg.json";
+    vegaEmbed('#line_vis', lineSpec).then(function(result) {
+      // Line chart loaded successfully
+    }).catch(console.error);
+  </script>
 </body>
 </html>
 
