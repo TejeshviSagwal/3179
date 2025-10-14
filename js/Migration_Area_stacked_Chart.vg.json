@@ -1,0 +1,75 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Stacked area chart showing total migration into Australia by country of birth, stacked with largest areas on the bottom.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/cleaned_migration_top10.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum['Migration'] > 0"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "Migration",
+          "as": "total_country"
+        }
+      ],
+      "groupby": ["Country_Grouped"]
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "interpolate": "monotone"
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "title": "Financial Year"
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "Migration",
+      "type": "quantitative",
+      "title": "Total Migration"
+    },
+    "color": {
+      "field": "Country_Grouped",
+      "type": "nominal",
+      "title": "Country of Birth",
+      "legend": {
+        "orient": "right"
+      },
+      "scale": {"scheme": "category20"}
+    },
+    "order": {
+      "field": "total_country",
+      "type": "quantitative",
+      "sort": "descending"
+    },
+    "tooltip": [
+      {
+        "field": "Country_Grouped",
+        "type": "nominal"
+      },
+      {
+        "aggregate": "sum",
+        "field": "Migration",
+        "type": "quantitative",
+        "title": "Migration"
+      },
+      {
+        "field": "Year",
+        "type": "ordinal"
+      }
+    ]
+  },
+  "title": {
+    "text": "Total Migration to Australia by Country of Birth (2004–2015)",
+    "anchor": "start"
+  },
+  "width": 800,
+  "height": 400
+}
