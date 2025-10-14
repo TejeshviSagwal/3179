@@ -14,25 +14,80 @@
 </head>
 
 <body style="font-family: sans-serif; margin: 40px;">
-  <h2>Map of Overseas Migration by Region</h2>
-  <div id="map_vis"></div>
+  <h1>Migration Visualisations Dashboard</h1>
 
-  <h2>Interactive Visualisation of Migration Trends</h2>
-  <div id="line_vis"></div>
+  <!-- MAP VISUALISATION -->
+  <section>
+    <h2>Map of Overseas Migration by Region</h2>
+    <div id="map_vis"></div>
+  </section>
+
+  <!-- INTERACTIVE LINE CHART -->
+  <section style="margin-top: 60px;">
+    <h2>Interactive Visualisation of Migration Trends</h2>
+    <div id="line_vis"></div>
+  </section>
+
+  <!-- STACKED AREA CHART -->
+  <section style="margin-top: 60px;">
+    <h2>Stacked Area Chart: Total Migration to Australia by Country of Birth</h2>
+    <p style="max-width: 700px;">
+      This visualisation shows the top 10 contributing countries to migration into Australia 
+      over time, with all other countries grouped under <strong>"Others"</strong>.
+    </p>
+    <div id="area_chart_vis"></div>
+  </section>
+
+  <!-- MULTIPLE LINE CHART BY VISA TYPE -->
+  <section style="margin-top: 60px;">
+    <h2>Multiple Line Chart: Visa Trends Over Time</h2>
+    <p style="max-width: 700px;">
+      This visualisation shows the trends of different visa categories from 2004 to 2024,
+      allowing comparison between types such as Student, Skilled, and Visitor visas.
+    </p>
+    <div id="visa_line_chart_vis"></div>
+  </section>
+
+  <!-- TREE MAP FOR 2022-23 -->
+  <section style="margin-top: 60px;">
+    <h2>Migration Breakdown for 2022–23</h2>
+    <p style="max-width: 700px;">
+      This visualises the proportional contribution of different visa categories and migration directions 
+      arrivals during the 2022–23 period.
+    </p>
+    <div id="treemap_vis"></div>
+  </section>
 
   <script type="text/javascript">
-    // Week 9 Map
+    // --- Map visualisation ---
     var mapSpec = "js/migration_map_with_graticule.vg.json";
     vegaEmbed('#map_vis', mapSpec).then(function(result) {
       // Map loaded successfully
     }).catch(console.error);
 
-    // Second Visualisation (interactive)
+    // --- Interactive line chart ---
     var lineSpec = "js/interactive_visualisation.vg.json";
     vegaEmbed('#line_vis', lineSpec).then(function(result) {
       // Line chart loaded successfully
     }).catch(console.error);
+
+    // --- Stacked area chart ---
+    var areaSpec = "js/Migration_Area_stacked_Chart.vg.json";
+    vegaEmbed('#area_chart_vis', areaSpec).then(function(result) {
+      // Area chart loaded successfully
+    }).catch(console.error);
+
+    // --- Multiple line chart by visa ---
+    var visaLineSpec = "js/Multiple_Line_Chart_by_visa.vg.json";
+    vegaEmbed('#visa_line_chart_vis', visaLineSpec).then(function(result) {
+      // Visa chart loaded successfully
+    }).catch(console.error);
+
+    // --- Tree map for 2022–23 ---
+    var treeMapSpec = "js/Migration_treemap_22-23.vg.json";
+    vegaEmbed('#treemap_vis', treeMapSpec).then(function(result) {
+      // Tree map loaded successfully
+    }).catch(console.error);
   </script>
 </body>
 </html>
-
