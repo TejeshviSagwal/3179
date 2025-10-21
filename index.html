@@ -1,93 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Migration Visualisations</title>
+  <title>Migration Visualisations Dashboard</title>
 
   <!-- Vega & Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
 
-  <!-- CSS file -->
-  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background-color: #fafafa;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin: 60px 0 20px;
+      color: #1a237e;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      color: #1a237e;
+      margin-bottom: 10px;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 8%;
+      gap: 60px;
+    }
+
+    section:nth-child(even) {
+      flex-direction: row-reverse;
+      background-color: #f0f2f5;
+    }
+
+    section:nth-child(odd) {
+      background-color: #ffffff;
+    }
+
+    .vis-container {
+      flex: 1.2;
+      min-width: 1050px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: white;
+      padding: 10px;
+    }
+
+    .vis-container-bigger {
+      flex: 1.2;
+      min-width: 1100px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: white;
+      padding: 10px;
+    }
+
+    .vis-container-smaller {
+      flex: 1.2;
+      min-width: 400px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: white;
+      padding: 10px;
+    }
+
+    .description {
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .description p {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    section:hover {
+      background-color: #e8eaf6;
+      transition: 0.4s ease;
+    }
+
+    footer {
+      background-color: #1a237e;
+      color: white;
+      padding: 40px 8%;
+      text-align: left;
+    }
+
+    footer h2 {
+      color: #fff;
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+    }
+
+    footer p {
+      margin: 6px 0;
+      font-size: 1rem;
+      color: #e0e0e0;
+    }
+
+    footer a {
+      color: #bbdefb;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      section:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .vis-container, .description {
+        max-width: 100%;
+      }
+
+      footer {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 
-<body style="font-family: sans-serif; margin: 40px;">
+<body>
   <h1>Migration Visualisations Dashboard</h1>
 
   <!-- MAP VISUALISATION -->
   <section>
-    <h2>Map of Overseas Migration by Region</h2>
-    <div id="map_vis"></div>
+    <div class="vis-container" id="map_vis"></div>
+    <div class="description">
+      <h2>Map of Overseas Migration by Region</h2>
+      <p>This interactive map highlights the distribution of overseas migration across different regions.</p>
+    </div>
   </section>
 
   <!-- INTERACTIVE LINE CHART -->
-  <section style="margin-top: 60px;">
-    <h2>Interactive Visualisation of Migration Trends</h2>
-    <div id="line_vis"></div>
+  <section>
+    <div class="vis-container" id="line_vis"></div>
+    <div class="description">
+      <h2>Interactive Visualisation of Migration Trends</h2>
+      <p>This chart allows you to explore migration trends over time interactively.</p>
+    </div>
   </section>
 
   <!-- STACKED AREA CHART -->
-  <section style="margin-top: 60px;">
-    <h2>Stacked Area Chart: Total Migration to Australia by Country of Birth</h2>
-    <p style="max-width: 700px;">
-      This visualisation shows the top 10 contributing countries to migration into Australia 
-      over time, with all other countries grouped under <strong>"Others"</strong>.
-    </p>
-    <div id="area_chart_vis"></div>
+  <section>
+    <div class="vis-container" id="area_chart_vis"></div>
+    <div class="description">
+      <h2>Stacked Area Chart: Migration by Country of Birth</h2>
+      <p>This stacked area chart presents the top source countries contributing to migration into Australia over time.</p>
+    </div>
   </section>
 
   <!-- MULTIPLE LINE CHART BY VISA TYPE -->
-  <section style="margin-top: 60px;">
-    <h2>Multiple Line Chart: Visa Trends Over Time</h2>
-    <p style="max-width: 700px;">
-      This visualisation shows the trends of different visa categories from 2004 to 2024,
-      allowing comparison between types such as Student, Skilled, and Visitor visas.
-    </p>
-    <div id="visa_line_chart_vis"></div>
+  <section>
+    <div class="vis-container-bigger" id="visa_line_chart_vis"></div>
+    <div class="description">
+      <h2>Visa Trends Over Time</h2>
+      <p>This multiple line chart compares the trends of different visa categories from 2004 to 2024.</p>
+    </div>
   </section>
 
   <!-- TREE MAP FOR 2022-23 -->
-  <section style="margin-top: 60px;">
-    <h2>Migration Breakdown for 2022–23</h2>
-    <p style="max-width: 700px;">
-      This visualises the proportional contribution of different visa categories and migration directions 
-      arrivals during the 2022–23 period.
-    </p>
-    <div id="treemap_vis"></div>
+  <section>
+    <div class="vis-container-smaller" id="treemap_vis"></div>
+    <div class="description">
+      <h2>Migration Breakdown for 2022–23</h2>
+      <p>This treemap visualises the proportional contribution of different visa categories for 2022–23.</p>
+    </div>
   </section>
 
+  <!-- STATE BUBBLE CHART -->
+  <section>
+    <div class="vis-container" id="state_bubble_chart_vis"></div>
+    <div class="description">
+      <h2>State Comparison: GSP, Migration, and Population (2023-2024)</h2>
+      <p>This bubble chart visualises how each Australian state compares in terms of 
+         <strong>Gross State Product (GSP)</strong>, <strong>Net Migration</strong>, and <strong>Population</strong>.</p>
+    </div>
+  </section>
+
+  <!-- METADATA SECTION -->
+  <footer>
+    <h2>Metadata</h2>
+    <p><strong>Author:</strong> Tejeshvi Sagwal</p>
+    <p><strong>Date Created:</strong> October 2025</p>
+    <p><strong>Data Sources:</strong></p>
+    <ul>
+      <li>Australian Bureau of Statistics (ABS) – Net Overseas Migration and State Economic Data</li>
+      <li>Australian Bureau of Statistics (ABS) – Visa Statistics and Migration Reports</li>
+      <li>Custom processed datasets hosted on <a href="https://github.com/TejeshviSagwal/3179" target="_blank">GitHub Repository</a></li>
+    </ul>
+    <p><strong>Tools Used:</strong> Vega-Lite v5, Vega-Embed, HTML5, CSS3</p>
+    <p><strong>Purpose:</strong> To explore, visualise, and communicate migration patterns and trends in Australia from multiple perspectives.</p>
+  </footer>
+
+  <!-- Vega Embeds -->
   <script type="text/javascript">
-    // --- Map visualisation ---
-    var mapSpec = "js/migration_map_with_graticule.vg.json";
-    vegaEmbed('#map_vis', mapSpec).then(function(result) {
-      // Map loaded successfully
-    }).catch(console.error);
-
-    // --- Interactive line chart ---
-    var lineSpec = "js/interactive_visualisation.vg.json";
-    vegaEmbed('#line_vis', lineSpec).then(function(result) {
-      // Line chart loaded successfully
-    }).catch(console.error);
-
-    // --- Stacked area chart ---
-    var areaSpec = "js/Migration_Area_stacked_Chart.vg.json";
-    vegaEmbed('#area_chart_vis', areaSpec).then(function(result) {
-      // Area chart loaded successfully
-    }).catch(console.error);
-
-    // --- Multiple line chart by visa ---
-    var visaLineSpec = "js/Multiple_Line_Chart_by_visa.vg.json";
-    vegaEmbed('#visa_line_chart_vis', visaLineSpec).then(function(result) {
-      // Visa chart loaded successfully
-    }).catch(console.error);
-
-    // --- Tree map for 2022–23 ---
-    var treeMapSpec = "js/Migration_treemap_22-23.vg.json";
-    vegaEmbed('#treemap_vis', treeMapSpec).then(function(result) {
-      // Tree map loaded successfully
-    }).catch(console.error);
+    vegaEmbed('#map_vis', "js/migration_map_with_graticule.vg.json").catch(console.error);
+    vegaEmbed('#line_vis', "js/interactive_visualisation.vg.json").catch(console.error);
+    vegaEmbed('#area_chart_vis', "js/Migration_Area_stacked_Chart.vg.json").catch(console.error);
+    vegaEmbed('#visa_line_chart_vis', "js/Multiple_Line_Chart_by_visa.vg.json").catch(console.error);
+    vegaEmbed('#treemap_vis', "js/Migration_treemap_22-23.vg.json").catch(console.error);
+    vegaEmbed('#state_bubble_chart_vis', "js/state_bubble_chart.vg.json").catch(console.error);
   </script>
 </body>
 </html>
