@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": {"signal": "'Net Overseas Migration per 1000 People by Australian State (' + selectedYear + ')'"}
+  },
+  "width": 850,
+  "height": 600,
+  "projection": {"type": "mercator"},
+
+  "data": {
+    "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/merged_population_migration.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {
+      "lookup": "State",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/Australia_state_map_With_30_graticule.json",
+          "format": {"type": "topojson", "feature": "georef-australia-state-millesime"}
+        },
+        "key": "properties.ste_name",
+        "fields": ["properties", "type", "geometry"]
+      }
+    },
+    {"filter": "toNumber(datum.Year) == selectedYear"}
+  ],
+
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2022,
+      "bind": {
+        "input": "range",
+        "min": 1981,
+        "max": 2025,
+        "step": 1,
+        "name": "Select Year: "
+      }
+    }
+  ],
+
+  "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.8},
+
+  "encoding": {
+    "color": {
+      "field": "Net_Migration_per_1000",
+      "type": "quantitative",
+      "title": "Net Migration per 1000 people",
+      "scale": {"scheme": "blues", "domain": [0, 5]}
+    },
+    "tooltip": [
+      {"field": "properties.ste_name", "type": "nominal", "title": "State"},
+      {
+        "field": "Net_Migration_per_1000",
+        "type": "quantitative",
+        "title": "Migration per 1000 people",
+        "format": ".2f"
+      },
+      {"field": "Year", "type": "ordinal"}
+    ]
+  }
+}

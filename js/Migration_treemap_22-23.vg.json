@@ -1,0 +1,50 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Tree map showing the distribution of migration categories for 2022-23.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/Treemap_Visa.csv"
+  },
+  "transform": [
+    {"filter": "datum.Value > 0"}
+  ],
+  "mark": {"type": "rect"},
+  "encoding": {
+    "facet": {
+      "field": "Direction",
+      "type": "nominal",
+      "title": "Migration Direction"
+    },
+    "x": {
+      "aggregate": "sum",
+      "field": "Value",
+      "stack": "normalize",
+      "axis": null
+    },
+    "y": {
+      "field": "Category",
+      "type": "nominal",
+      "sort": "-x",
+      "title": "Category"
+    },
+    "color": {
+      "field": "Visa Type",
+      "type": "nominal",
+      "title": "Visa Type",
+      "scale": {
+        "domain": ["Permanent visas", "Temporary visas"],
+        "range": ["#d48715", "#1594d4"]
+      }
+    },
+    "tooltip": [
+      {"field": "Direction", "type": "nominal", "title": "Direction"},
+      {"field": "Visa Type", "type": "nominal", "title": "Visa Type"},
+      {"field": "Category", "type": "nominal", "title": "Category"},
+      {"field": "Value", "type": "quantitative", "title": "Value"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": null},
+    "mark": {"stroke": "#fff"},
+    "title": {"fontSize": 16, "anchor": "start"}
+  }
+}

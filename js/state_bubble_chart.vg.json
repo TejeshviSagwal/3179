@@ -1,0 +1,43 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bubble chart showing migration vs GSP with population as bubble size.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/TejeshviSagwal/3179/refs/heads/main/australia_state_data.csv"
+  },
+  "mark": {
+    "type": "circle",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "Net Migration",
+      "type": "quantitative",
+      "title": "Net Migration"
+    },
+    "y": {
+      "field": "GSP",
+      "type": "quantitative",
+      "title": "Gross State Product (GSP)"
+    },
+    "size": {
+      "field": "Population",
+      "type": "quantitative",
+      "scale": {"range": [100, 2000]},
+      "legend": null
+    },
+    "color": {
+      "field": "State",
+      "type": "nominal",
+      "title": "State"
+    },
+    "tooltip": [
+      {"field": "State", "type": "nominal"},
+      {"field": "Net Migration", "type": "quantitative"},
+      {"field": "GSP", "type": "quantitative"},
+      {"field": "Population", "type": "quantitative"}
+    ]
+  },
+  "width": 800,
+  "height": 500,
+  "title": "Australian States: Migration vs GSP with Population Bubble Size"
+}
